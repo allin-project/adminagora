@@ -479,27 +479,8 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-slate-300 uppercase">관리</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-600">
-                                <tr class="table-row">
-                                    <td class="px-6 py-4 text-white">익명의 미식가</td>
-                                    <td class="px-6 py-4 text-slate-300">2024-01-15</td>
-                                    <td class="px-6 py-4 text-slate-300">글 15개, 댓글 43개</td>
-                                    <td class="px-6 py-4"><span class="bg-green-600 text-white px-2 py-1 rounded text-xs">활성</span></td>
-                                    <td class="px-6 py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 text-sm mr-3">상세</button>
-                                        <button class="text-red-400 hover:text-red-300 text-sm">제재</button>
-                                    </td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="px-6 py-4 text-white">게임러버</td>
-                                    <td class="px-6 py-4 text-slate-300">2024-01-12</td>
-                                    <td class="px-6 py-4 text-slate-300">글 8개, 댓글 21개</td>
-                                    <td class="px-6 py-4"><span class="bg-green-600 text-white px-2 py-1 rounded text-xs">활성</span></td>
-                                    <td class="px-6 py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 text-sm mr-3">상세</button>
-                                        <button class="text-red-400 hover:text-red-300 text-sm">제재</button>
-                                    </td>
-                                </tr>
+                            <tbody id="userTableBody" class="divide-y divide-slate-600">
+                                <!-- 동적으로 로드됨 -->
                             </tbody>
                         </table>
                     </div>
@@ -513,15 +494,8 @@
                         <div class="px-6 py-4 border-b border-slate-600">
                             <h3 class="text-lg font-semibold text-white">📝 최근 게시글</h3>
                         </div>
-                        <div class="p-6 space-y-4">
-                            <div class="p-4 bg-slate-700 rounded">
-                                <h4 class="text-white font-medium mb-2">짜장면 vs 짬뽕 어떤게 더 맛있을까요?</h4>
-                                <div class="text-sm text-slate-400">음식 갤러리 • 익명의 미식가 • 30분 전</div>
-                                <div class="flex gap-2 mt-2">
-                                    <button class="text-blue-400 hover:text-blue-300 text-sm">수정</button>
-                                    <button class="text-red-400 hover:text-red-300 text-sm">삭제</button>
-                                </div>
-                            </div>
+                        <div id="recentPostsList" class="p-6 space-y-4">
+                            <!-- 동적으로 로드됨 -->
                         </div>
                     </div>
 
@@ -529,15 +503,8 @@
                         <div class="px-6 py-4 border-b border-slate-600">
                             <h3 class="text-lg font-semibold text-white">🗳️ 활성 투표</h3>
                         </div>
-                        <div class="p-6 space-y-4">
-                            <div class="p-4 bg-slate-700 rounded">
-                                <h4 class="text-white font-medium mb-2">치킨 vs 피자</h4>
-                                <div class="text-sm text-slate-400">총 103표 • 2시간 전 생성</div>
-                                <div class="flex gap-2 mt-2">
-                                    <button class="text-blue-400 hover:text-blue-300 text-sm">상세</button>
-                                    <button class="text-red-400 hover:text-red-300 text-sm">종료</button>
-                                </div>
-                            </div>
+                        <div id="activePollsList" class="p-6 space-y-4">
+                            <!-- 동적으로 로드됨 -->
                         </div>
                     </div>
                 </div>
@@ -548,29 +515,50 @@
                 <div class="card rounded-lg">
                     <div class="px-6 py-4 border-b border-slate-600">
                         <h2 class="text-xl font-bold text-white">⚙️ 시스템 설정</h2>
+                        <p class="text-slate-400 text-sm mt-1">메인 사이트의 전체 설정을 관리합니다</p>
                     </div>
                     <div class="p-6 space-y-6">
                         <div class="grid md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-sm font-medium text-slate-300 mb-2">사이트 제목</label>
-                                <input type="text" value="VoteSpace" class="input-dark w-full px-4 py-2 rounded-md">
+                                <input type="text" id="siteTitle" value="VoteSpace" class="input-dark w-full px-4 py-2 rounded-md">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-300 mb-2">사이트 부제목</label>
-                                <input type="text" value="익명 커뮤니티" class="input-dark w-full px-4 py-2 rounded-md">
+                                <input type="text" id="siteSubtitle" value="익명 커뮤니티" class="input-dark w-full px-4 py-2 rounded-md">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-slate-300 mb-2">사이트 설명</label>
-                            <textarea class="input-dark w-full px-4 py-2 rounded-md" rows="3">실시간 투표와 토론이 가능한 익명 커뮤니티 플랫폼</textarea>
+                            <textarea id="siteDescription" class="input-dark w-full px-4 py-2 rounded-md" rows="3">실시간 투표와 토론이 가능한 익명 커뮤니티 플랫폼</textarea>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-2">최대 글자 수</label>
+                                <input type="number" id="maxPostLength" value="1000" class="input-dark w-full px-4 py-2 rounded-md">
+                            </div>
+                            <div class="space-y-3">
+                                <label class="block text-sm font-medium text-slate-300">사이트 옵션</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center gap-2">
+                                        <input type="checkbox" id="allowAnonymous" checked class="text-blue-600">
+                                        <span class="text-slate-300">익명 게시 허용</span>
+                                    </label>
+                                    <label class="flex items-center gap-2">
+                                        <input type="checkbox" id="maintenanceMode" class="text-blue-600">
+                                        <span class="text-slate-300">점검 모드</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="flex gap-4">
-                            <button class="btn-primary px-6 py-2 rounded-md font-medium">
+                            <button onclick="saveSystemSettings()" class="btn-primary px-6 py-2 rounded-md font-medium">
                                 💾 설정 저장
                             </button>
-                            <button class="btn-danger px-6 py-2 rounded-md font-medium">
+                            <button onclick="resetSystemSettings()" class="btn-danger px-6 py-2 rounded-md font-medium">
                                 🔄 초기화
                             </button>
                         </div>
@@ -627,9 +615,18 @@
             
             currentAdminSection = section;
             
-            // 대시보드 섹션일 때 통계 업데이트
-            if (section === 'dashboard') {
-                updateDashboardStats();
+            // 섹션별 데이터 로드
+            switch(section) {
+                case 'dashboard':
+                    updateDashboardStats();
+                    break;
+                case 'users':
+                    loadUserList();
+                    break;
+                case 'content':
+                    loadRecentPosts();
+                    loadActivePolls();
+                    break;
             }
         }
 
@@ -756,7 +753,104 @@
             // 로컬 스토리지에 저장 (실제로는 서버에 저장)
             localStorage.setItem('bannerSettings', JSON.stringify(settings));
             
+            // 메인 사이트에 즉시 반영 신호 보내기
+            localStorage.setItem('adminUpdate', JSON.stringify({
+                type: 'banner',
+                timestamp: Date.now(),
+                settings: settings
+            }));
+            
             alert('✅ 배너 설정이 저장되었습니다!\n메인 사이트에 즉시 반영됩니다.');
+        }
+
+        // 시스템 설정 저장
+        function saveSystemSettings() {
+            const settings = {
+                siteTitle: document.getElementById('siteTitle').value,
+                siteSubtitle: document.getElementById('siteSubtitle').value,
+                siteDescription: document.getElementById('siteDescription').value,
+                maintenanceMode: document.getElementById('maintenanceMode').checked,
+                allowAnonymous: document.getElementById('allowAnonymous').checked,
+                maxPostLength: document.getElementById('maxPostLength').value
+            };
+
+            localStorage.setItem('systemSettings', JSON.stringify(settings));
+            
+            // 메인 사이트에 즉시 반영 신호 보내기
+            localStorage.setItem('adminUpdate', JSON.stringify({
+                type: 'system',
+                timestamp: Date.now(),
+                settings: settings
+            }));
+            
+            alert('✅ 시스템 설정이 저장되었습니다!\n메인 사이트에 즉시 반영됩니다.');
+        }
+
+        // 사용자 제재
+        function banUser(username) {
+            if (confirm(`정말 "${username}" 사용자를 제재하시겠습니까?`)) {
+                let bannedUsers = JSON.parse(localStorage.getItem('bannedUsers') || '[]');
+                if (!bannedUsers.includes(username)) {
+                    bannedUsers.push(username);
+                    localStorage.setItem('bannedUsers', JSON.stringify(bannedUsers));
+                    
+                    // 메인 사이트에 즉시 반영
+                    localStorage.setItem('adminUpdate', JSON.stringify({
+                        type: 'userBan',
+                        timestamp: Date.now(),
+                        username: username
+                    }));
+                    
+                    alert(`✅ "${username}" 사용자가 제재되었습니다.`);
+                    loadUserList();
+                }
+            }
+        }
+
+        // 게시글 삭제
+        function deletePost(postId) {
+            if (confirm('정말 이 게시글을 삭제하시겠습니까?')) {
+                let posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+                posts = posts.filter(post => post.id !== postId);
+                localStorage.setItem('communityPosts', JSON.stringify(posts));
+                
+                // 메인 사이트에 즉시 반영
+                localStorage.setItem('adminUpdate', JSON.stringify({
+                    type: 'postDelete',
+                    timestamp: Date.now(),
+                    postId: postId
+                }));
+                
+                alert('✅ 게시글이 삭제되었습니다.');
+                loadRecentPosts();
+                updateDashboardStats();
+            }
+        }
+
+        // 투표 종료
+        function endPoll(pollId) {
+            if (confirm('정말 이 투표를 종료하시겠습니까?')) {
+                let polls = JSON.parse(localStorage.getItem('communityPolls') || '[]');
+                polls = polls.map(poll => {
+                    if (poll.id === pollId) {
+                        poll.ended = true;
+                        poll.endedAt = Date.now();
+                    }
+                    return poll;
+                });
+                localStorage.setItem('communityPolls', JSON.stringify(polls));
+                
+                // 메인 사이트에 즉시 반영
+                localStorage.setItem('adminUpdate', JSON.stringify({
+                    type: 'pollEnd',
+                    timestamp: Date.now(),
+                    pollId: pollId
+                }));
+                
+                alert('✅ 투표가 종료되었습니다.');
+                loadActivePolls();
+                updateDashboardStats();
+            }
         }
 
         // 색상 입력 필드 동기화
@@ -776,6 +870,190 @@
             document.getElementById('gradientEnd').value = this.value;
         });
 
+        // 사용자 목록 로드
+        function loadUserList() {
+            const posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+            const polls = JSON.parse(localStorage.getItem('communityPolls') || '[]');
+            const bannedUsers = JSON.parse(localStorage.getItem('bannedUsers') || '[]');
+            
+            // 사용자별 활동 통계 계산
+            const userStats = {};
+            
+            posts.forEach(post => {
+                if (post.author) {
+                    if (!userStats[post.author]) {
+                        userStats[post.author] = { posts: 0, comments: 0, joinDate: post.timestamp };
+                    }
+                    userStats[post.author].posts++;
+                    if (post.timestamp < userStats[post.author].joinDate) {
+                        userStats[post.author].joinDate = post.timestamp;
+                    }
+                }
+            });
+            
+            polls.forEach(poll => {
+                if (poll.author) {
+                    if (!userStats[poll.author]) {
+                        userStats[poll.author] = { posts: 0, comments: 0, joinDate: poll.timestamp };
+                    }
+                    userStats[poll.author].posts++;
+                    if (poll.timestamp < userStats[poll.author].joinDate) {
+                        userStats[poll.author].joinDate = poll.timestamp;
+                    }
+                }
+            });
+            
+            // 기본 사용자들 추가
+            if (Object.keys(userStats).length === 0) {
+                userStats['익명의 미식가'] = { posts: 15, comments: 43, joinDate: Date.now() - 86400000 * 10 };
+                userStats['게임러버'] = { posts: 8, comments: 21, joinDate: Date.now() - 86400000 * 13 };
+                userStats['영화광'] = { posts: 12, comments: 35, joinDate: Date.now() - 86400000 * 7 };
+            }
+            
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+            
+            Object.entries(userStats).forEach(([username, stats]) => {
+                const isBanned = bannedUsers.includes(username);
+                const joinDate = new Date(stats.joinDate).toLocaleDateString();
+                
+                const row = document.createElement('tr');
+                row.className = 'table-row';
+                row.innerHTML = `
+                    <td class="px-6 py-4 text-white">${username}</td>
+                    <td class="px-6 py-4 text-slate-300">${joinDate}</td>
+                    <td class="px-6 py-4 text-slate-300">글 ${stats.posts}개, 댓글 ${stats.comments}개</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded text-xs ${isBanned ? 'bg-red-600 text-white' : 'bg-green-600 text-white'}">
+                            ${isBanned ? '제재됨' : '활성'}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <button class="text-blue-400 hover:text-blue-300 text-sm mr-3">상세</button>
+                        ${!isBanned ? `<button onclick="banUser('${username}')" class="text-red-400 hover:text-red-300 text-sm">제재</button>` : 
+                                     `<button onclick="unbanUser('${username}')" class="text-green-400 hover:text-green-300 text-sm">해제</button>`}
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // 사용자 제재 해제
+        function unbanUser(username) {
+            if (confirm(`"${username}" 사용자의 제재를 해제하시겠습니까?`)) {
+                let bannedUsers = JSON.parse(localStorage.getItem('bannedUsers') || '[]');
+                bannedUsers = bannedUsers.filter(user => user !== username);
+                localStorage.setItem('bannedUsers', JSON.stringify(bannedUsers));
+                
+                localStorage.setItem('adminUpdate', JSON.stringify({
+                    type: 'userUnban',
+                    timestamp: Date.now(),
+                    username: username
+                }));
+                
+                alert(`✅ "${username}" 사용자의 제재가 해제되었습니다.`);
+                loadUserList();
+            }
+        }
+
+        // 최근 게시글 로드
+        function loadRecentPosts() {
+            const posts = JSON.parse(localStorage.getItem('communityPosts') || '[]');
+            const container = document.getElementById('recentPostsList');
+            
+            if (posts.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-slate-400 py-8">
+                        <div class="text-4xl mb-4">📝</div>
+                        <p>아직 게시글이 없습니다</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // 최근 5개 게시글만 표시
+            const recentPosts = posts.slice(-5).reverse();
+            
+            container.innerHTML = recentPosts.map(post => {
+                const timeAgo = getTimeAgo(post.timestamp);
+                return `
+                    <div class="p-4 bg-slate-700 rounded">
+                        <h4 class="text-white font-medium mb-2">${post.title}</h4>
+                        <div class="text-sm text-slate-400">${post.gallery} • ${post.author} • ${timeAgo}</div>
+                        <div class="flex gap-2 mt-2">
+                            <button class="text-blue-400 hover:text-blue-300 text-sm">상세</button>
+                            <button onclick="deletePost('${post.id}')" class="text-red-400 hover:text-red-300 text-sm">삭제</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 활성 투표 로드
+        function loadActivePolls() {
+            const polls = JSON.parse(localStorage.getItem('communityPolls') || '[]');
+            const votes = JSON.parse(localStorage.getItem('pollVotes') || '{}');
+            const container = document.getElementById('activePollsList');
+            
+            const activePolls = polls.filter(poll => !poll.ended);
+            
+            if (activePolls.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center text-slate-400 py-8">
+                        <div class="text-4xl mb-4">🗳️</div>
+                        <p>현재 활성 투표가 없습니다</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activePolls.map(poll => {
+                const pollVotes = votes[poll.id] || [];
+                const totalVotes = pollVotes.length;
+                const timeAgo = getTimeAgo(poll.timestamp);
+                
+                return `
+                    <div class="p-4 bg-slate-700 rounded">
+                        <h4 class="text-white font-medium mb-2">${poll.question}</h4>
+                        <div class="text-sm text-slate-400">총 ${totalVotes}표 • ${timeAgo} 생성</div>
+                        <div class="flex gap-2 mt-2">
+                            <button class="text-blue-400 hover:text-blue-300 text-sm">상세</button>
+                            <button onclick="endPoll('${poll.id}')" class="text-red-400 hover:text-red-300 text-sm">종료</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // 시간 계산 함수
+        function getTimeAgo(timestamp) {
+            const now = Date.now();
+            const diff = now - timestamp;
+            const minutes = Math.floor(diff / 60000);
+            const hours = Math.floor(diff / 3600000);
+            const days = Math.floor(diff / 86400000);
+            
+            if (days > 0) return `${days}일 전`;
+            if (hours > 0) return `${hours}시간 전`;
+            if (minutes > 0) return `${minutes}분 전`;
+            return '방금 전';
+        }
+
+        // 시스템 설정 초기화
+        function resetSystemSettings() {
+            if (confirm('정말 시스템 설정을 초기화하시겠습니까?')) {
+                document.getElementById('siteTitle').value = 'VoteSpace';
+                document.getElementById('siteSubtitle').value = '익명 커뮤니티';
+                document.getElementById('siteDescription').value = '실시간 투표와 토론이 가능한 익명 커뮤니티 플랫폼';
+                document.getElementById('maxPostLength').value = '1000';
+                document.getElementById('allowAnonymous').checked = true;
+                document.getElementById('maintenanceMode').checked = false;
+                
+                localStorage.removeItem('systemSettings');
+                alert('✅ 시스템 설정이 초기화되었습니다.');
+            }
+        }
+
         // 페이지 로드 시 초기화
         window.onload = function() {
             // 저장된 배너 설정 불러오기
@@ -794,9 +1072,24 @@
                 updateBannerPreview();
             }
             
+            // 저장된 시스템 설정 불러오기
+            const savedSystemSettings = localStorage.getItem('systemSettings');
+            if (savedSystemSettings) {
+                const settings = JSON.parse(savedSystemSettings);
+                document.getElementById('siteTitle').value = settings.siteTitle || 'VoteSpace';
+                document.getElementById('siteSubtitle').value = settings.siteSubtitle || '익명 커뮤니티';
+                document.getElementById('siteDescription').value = settings.siteDescription || '실시간 투표와 토론이 가능한 익명 커뮤니티 플랫폼';
+                document.getElementById('maxPostLength').value = settings.maxPostLength || '1000';
+                document.getElementById('allowAnonymous').checked = settings.allowAnonymous !== false;
+                document.getElementById('maintenanceMode').checked = settings.maintenanceMode || false;
+            }
+            
             // 로그인 상태라면 통계 업데이트
             if (isLoggedIn) {
                 updateDashboardStats();
+                loadUserList();
+                loadRecentPosts();
+                loadActivePolls();
             }
             
             // 5초마다 자동 새로고침 (실시간 업데이트)
@@ -816,5 +1109,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9709b7f5907dea11',t:'MTc1NTQzOTQ0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9709c28ae60bea25',t:'MTc1NTQzOTg3OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
